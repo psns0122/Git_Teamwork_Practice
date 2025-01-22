@@ -1,0 +1,83 @@
+1. 객체와 클래스에 대한 설명으로 틀린 것은 무엇입니까?
+-> 3번. 하나의 클래스로 여러개의 인스턴스를 생성할 수 있다.
+
+2. 클래스의 구성 멤버가 아닌 것은 무엇입니까?
+-> 4번. 로컬 변수
+
+3. 필드, 생성자, 메소드에 대한 설명으로 틀린 것은 무엇입니까?
+-> 4번. 클래스는 필드와 메소드를 반드시 가질 필요는 없다.
+
+4. 필드에 대한 설명으로 틀린 것은 무엇입니까?
+-> 3번. 필드의 선언 위치는 중요하지 않다. 다만 가급적 관례를 따라 가독성 좋게 작성한다.
+
+5. 생성자에 대한 설명으로 틀린 것은 무엇입니까?
+-> 1번. 객체를 생성하려면 생성자 호출이 반드시 필요하다.
+
+6. 메소드에 대한 설명으로 틀린 것은 무엇입니까?
+-> 4번. 메소드의 이름은 메소드 오버로딩을 위해 중복해서 선언할 수 있다.
+
+7. 메소드 오버로딩에 대한 설명으로 틀린 것은 무엇입니까?
+-> 2번. 메소드 오버로딩의 리턴 타입은 다르지 않아도 된다.
+
+8. 인스턴스 멤버와 정적 멤버에 대한 설명으로 틀린 것은 무엇입니까?
+-> 2번. 정적 블록에서는 정적 멤버만 사용할 수 있다.
+
+9. final 필드와 상수(static final)에 대한 설명으로 틀린 것은 무엇입니까?
+-> 2번. final 필드와 상수는 선언과 동시에 초기화 된다.
+
+10. 패키지에 대한 설명으로 틀린 것은 무엇입니까?
+-> 3번. 다른 패키지의 클래스더라도 public 접근지정자라면 import 선언 없이 사용 가능하다
+
+11. 접근 제한에 대한 설명으로 틀린 것은 무엇입니까?
+3번. default 접근 제한은 해당 패키지 내에서만 사용을 허가한다.
+
+12. 다음 클래스에서 해당 멤버가 필드, 생성자, 메소드 중 어떤 것인지 () 안에 적어보세요.
+1) name : 필드
+2) Member : 생성자
+3) setName : 메소드
+
+13. 현실 세계의 회원을 Member 클래스로 모델링 하려고 합니다. 회원의 데이터로는 이름, 아이디, 패스워드, 나이가 있습니다. 이 데이터들을 가지는 Member 클래스를 선언해보세요.
+class Member {
+    String name;
+    String id;
+    String password;
+    int age;
+}
+
+Member m1 = new Member();
+
+14. 13번 문제에서 작성한 Member 클래스에 생성자를 추가하려고 합니다. 다음과 같이 name 필드와 id 필드를 외부에서 받은 값으로 초기화하도록 생성자를 선언해보세요.
+Member(String _name, String _id) {
+    this.name = _name;
+    this.id = _id;
+}
+
+15. login() 메소드를 호출할 대에는 매개값으로 id와 password를 제공하고, logout() 메소드는 id만 매개값으로 제공하려고 합니다. 다음 조건과 예제 코드를 보고 MemberService 클래스에서 login(), logout() 메소드를 선언해보세요.
+1) login() 메소드는 매개값 id가 "hong", 매개값 password가 "12345"일 경우에만 true로 리턴
+boolean login(String id, String password) {
+    if (id.equal("hong") && password.equal("12345")) return true;
+    else return false;
+}
+
+2) logout() 메소드는 id + "님이 로그아웃 되었습니다"가 출력되도록 할 것
+void logout() {
+    System.out.println(this.id + "님이 로그아웃 되었습니다");
+}
+
+16. println() 메소드는 매개값을 콘솔에 출력합니다. println() 메소드의 매개값으로는 int, boolean, double, String 타입 값을 줄 수 있습니다. 다음 조건과 예제 코드를 보고 Printer 클래스에서 println() 메소드를 오버로딩하여 선언해보세요.
+void println(int num) {
+    System.out.println(num);
+}
+void println(boolean bool) {
+    System.out.println(bool);
+}
+void println(double fnum) {
+    System.out.println(fnum);
+}
+void println(String str) {
+    System.out.println(str);
+}
+
+17. 16번 문제에서는 Printer 객체를 생성하고 println() 메소드를 호출했습니다. 이번에는 Printer 객체를 생성하지 않고도 다음과 같이 호출할 수 잇도록 Printer 클래스를 수정해보세요.
+
+18. 다음 예제 코드가 실행되면 "같은 ShopService 객체입니다."라는 메시지가 출력되도록, 싱글톤 패턴을 사용해서 ShopService 클래스를 작성해보세요.
