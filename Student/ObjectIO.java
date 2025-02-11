@@ -1,5 +1,10 @@
+import java.io.IOException;
+
 public abstract class ObjectIO {
-    public abstract void input(String item);
-    public abstract void output();
-    public abstract Student search(String key);
+    abstract void readDB() throws IOException;
+    abstract void pushDB() throws IOException;
+
+    abstract void input(String item);
+    abstract void output(int type);
+    abstract int search(String key);
 }

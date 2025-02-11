@@ -5,12 +5,14 @@ public class TESTMAIN {
         ObjectIO m = StudentDBIO.getInstance();
 
         readDB(m);
-        m.output();
+        m.output(0);
         System.out.println("-----------------");
-        System.out.println(m.search("2017103985"));
+        m.output(m.search("2017103985"));
+        m.output(m.search("1111111111"));
         m.input("2025102004 신입생 100 100 100 100 0 0 NONE");
+        m.input("0000000000 신입생 100 100 100 100 0 0 NONE");
         System.out.println("-----------------");
-        m.output();
+        m.output(0);
         pushDB(m);
     }
 

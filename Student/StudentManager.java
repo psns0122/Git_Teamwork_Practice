@@ -7,20 +7,13 @@ public class StudentManager extends StudentDBIO {
 
     // 리스트에 대한 접근 (입력, 출력, 찾기 등)
     @Override
-    public Student findStudent(String sno) {
-        for (Student student : studentList) {
-            if (student.getSno().equals(sno)) {
-                return student;
+    public int findStudent(String sno) {
+        for (int i = 0; i < studentList.size(); i++) {
+            if (studentList.get(i).getSno().equals(sno)) {
+                return i;
             }
         }
-        return null;
-    }
-
-    @Override
-    public void printStudent() {
-        for(Student student : studentList) {
-            System.out.println(student);
-        }
+        return -1;
     }
 
     @Override
@@ -34,7 +27,7 @@ public class StudentManager extends StudentDBIO {
         StringTokenizer st = new StringTokenizer(item);
         String studentID = st.nextToken();
 
-        if (this.findStudent(studentID) != null) {
+        if (this.findStudent(studentID) != -1) {
             return;
         }
 
@@ -49,6 +42,18 @@ public class StudentManager extends StudentDBIO {
         this.calcGrade(s);
 
         studentList.add(s);
+    }
+
+    @Override
+    public void printStudent(int index) {
+        System.out.println(studentList.get(index));
+    }
+
+    @Override
+    public void printAll() {
+        for (Student student : studentList) {
+            System.out.println(student);
+        }
     }
 
     // 성적 계산
@@ -84,7 +89,4 @@ public class StudentManager extends StudentDBIO {
         return studentList;
     }
 
-    public void setStudentList(ArrayList<Student> studentList) {
-        this.studentList = studentList;
-    }
 }

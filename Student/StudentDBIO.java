@@ -10,6 +10,7 @@ public abstract class StudentDBIO extends ObjectIO implements StudentIO {
     protected StudentDBIO() { }
 
     // DB에서 데이터 읽어오는 함수 (READ)
+    @Override
     void readDB() throws IOException {
         BufferedReader br = new BufferedReader(new FileReader("src/StudentDB.dat"));
         while (true) {
@@ -21,6 +22,7 @@ public abstract class StudentDBIO extends ObjectIO implements StudentIO {
     }
 
     // DB에 데이터 넣는 함수 (PUSH)
+    @Override
     void pushDB() throws IOException {
         StudentManager sm = (StudentManager) INSTANCE;
         PrintWriter pw = new PrintWriter("src/StudentDB.dat");
@@ -31,18 +33,22 @@ public abstract class StudentDBIO extends ObjectIO implements StudentIO {
     }
 
     @Override
-    public void input(String item) {
+    void input(String item) {
+        // DB INPUT
         this.addStudent(item);
     }
 
     @Override
-    public void output() {
-        this.sortStudent();
-        this.printStudent();
+    void output(int type) {
+        if (type == -1) {
+            System.out.println("can not find student");
+        }
+
+        this.matchPrintType(type);
     }
 
     @Override
-    public Student search(String key) {
+    int search(String key) {
         return this.findStudent(key);
     }
 
@@ -50,8 +56,19 @@ public abstract class StudentDBIO extends ObjectIO implements StudentIO {
         return INSTANCE;
     }
 
-    public abstract Student findStudent(String sno);
+    @Override
+    public void matchPrintType(int type) {
+        if (type == 0) {
+            this.sortStudent();
+            this.printAll();
+        } else if (type > 0) {
+            this.printStudent(type);
+        }
+    }
+
+    public abstract int findStudent(String sno);
     public abstract void sortStudent();
     public abstract void addStudent(String item);
-    public abstract void printStudent();
+    public abstract void printStudent(int index);
+    public abstract void printAll();
 }

@@ -1,3 +1,4 @@
 public interface StudentOutput {
-    void printStudent();
+    void printStudent(int index);
+    void printAll();
 }
