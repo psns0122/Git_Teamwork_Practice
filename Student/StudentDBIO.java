@@ -61,10 +61,6 @@ public abstract class StudentDBIO extends ObjectIO implements StudentIO {
         return INSTANCE;
     }
 
-    @Override
-    public void matchPrintType(int type) {
-    }
-
     public abstract int findStudent(String sno);
     public abstract void sortStudent();
     public abstract void addStudent(String item);
