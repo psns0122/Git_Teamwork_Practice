@@ -5,6 +5,6 @@ public abstract class ObjectIO {
     abstract void pushDB() throws IOException;
 
     abstract void input(String item);
-    abstract void output(int type);
+    abstract void output(Integer type);
     abstract int search(String key);
 }

@@ -39,12 +39,17 @@ public abstract class StudentDBIO extends ObjectIO implements StudentIO {
     }
 
     @Override
-    void output(int type) {
-        if (type == -1) {
-            System.out.println("can not find student");
+    void output(Integer type) {
+        if (type == null) {
+            this.printAll();
+            return;
         }
 
-        this.matchPrintType(type);
+        if (type == -1) {
+            System.out.println("can not find student");
+        } else if (type >= 0) {
+            this.printStudent(type);
+        }
     }
 
     @Override
@@ -58,12 +63,6 @@ public abstract class StudentDBIO extends ObjectIO implements StudentIO {
 
     @Override
     public void matchPrintType(int type) {
-        if (type == 0) {
-            this.sortStudent();
-            this.printAll();
-        } else if (type > 0) {
-            this.printStudent(type);
-        }
     }
 
     public abstract int findStudent(String sno);

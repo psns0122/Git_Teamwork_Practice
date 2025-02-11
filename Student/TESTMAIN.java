@@ -4,15 +4,30 @@ public class TESTMAIN {
     public static void main(String[] args) {
         ObjectIO m = StudentDBIO.getInstance();
 
+        // DB에서 전체 학생 정보 읽어오기
         readDB(m);
-        m.output(0);
+
+        // DB에서 리스트로 옮겨온 데이터에 대해
+        // 전체 옵션(null)로 출력 시도
+        m.output(null);
         System.out.println("-----------------");
-        m.output(m.search("2017103985"));
+
+        // 검색 후 해당 학생만 출력 시도
+        m.output(m.search("0000000000")); // 맨 처음 출력 시도
+        m.output(m.search("2017103984")); // 중간 출력 시도
+        m.output(m.search("1100110111")); // 맨 끝 출력 시도
         m.output(m.search("1111111111"));
-        m.input("2025102004 신입생 100 100 100 100 0 0 NONE");
-        m.input("0000000000 신입생 100 100 100 100 0 0 NONE");
         System.out.println("-----------------");
-        m.output(0);
+
+        // 입력 시도
+        m.input("2025102004 신입생 100 100 100 100 0 0 NONE");
+        m.input("1100110111 신입생 100 100 100 100 0 0 NONE");
+        System.out.println("-----------------");
+
+        // 다시 전체 옵션(null)로 출력 시도
+        m.output(null);
+
+        // DB에 수정사항 저장하기
         pushDB(m);
     }
 
