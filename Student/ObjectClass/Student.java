@@ -1,3 +1,5 @@
+package ObjectClass;
+
 public class Student implements Comparable<Student> {
     private String sno;
     private String name;
@@ -8,6 +10,32 @@ public class Student implements Comparable<Student> {
     private int total;
     private float average;
     private String grade;
+
+    public Student() {}
+
+    public Student(String line) {
+        String[] parts = line.split(" ");
+        this.sno = parts[0];
+        this.name = parts[1];
+        this.korean = Integer.parseInt(parts[2]);
+        this.english = Integer.parseInt(parts[3]);
+        this.math = Integer.parseInt(parts[4]);
+        this.science = Integer.parseInt(parts[5]);
+    }
+
+    public Student(String sno, String name) {
+        this.sno = sno;
+        this.name = name;
+    }
+
+    public Student(String sno, String name, int science, int korean, int english, int math) {
+        this.sno = sno;
+        this.name = name;
+        this.science = science;
+        this.korean = korean;
+        this.english = english;
+        this.math = math;
+    }
 
     @Override
     public int compareTo(Student o) {

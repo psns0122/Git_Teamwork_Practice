@@ -1,56 +1,46 @@
+import Interface.InterfaceIO;
+import ObjectClass.Employee;
+import ObjectClass.Student;
+
 import java.io.IOException;
 
 public class TESTMAIN {
-    public static void main(String[] args) {
-        ObjectIO m = StudentDBIO.getInstance();
 
-        // DB에서 전체 학생 정보 읽어오기
-        readDB(m);
+    public static void main(String[] args) throws IOException {
 
-        // DB에서 리스트로 옮겨온 데이터에 대해
-        // 전체 옵션(null)로 출력 시도
-        m.output(null);
-        System.out.println("-----------------");
+        // 학생관리
+        ObjectDBIO<Student> studentDB = ObjectDBIO.getInstance(Student.class);
 
-        // 검색 후 해당 학생만 출력 시도
-        m.output(m.search("0000000000")); // 맨 처음 출력 시도
-        m.output(m.search("2017103984")); // 중간 출력 시도
-        m.output(m.search("1100110111")); // 맨 끝 출력 시도
-        m.output(m.search("1111111111"));
-        System.out.println("-----------------");
+        studentDB.readDB();
 
-        // 입력 시도
-        m.input("2025102004 신입생 100 100 100 100 0 0 NONE");
-        m.input("1100110111 신입생 100 100 100 100 0 0 NONE");
-        System.out.println("-----------------");
+        // TODO 함수형인터페이스 add
+//        InterfaceIO<Student, String> io = new InterfaceIO<>();
+//        io.add(
+//                (item) -> {
+//                    ((ObjectManager<Student>)studentDB).getObjects().add(item);
+//                },
+//                (param) -> new Student(param),
+//                "1111 1111 111 111 111 111 11 11 1"
+//        );
 
-        // 다시 전체 옵션(null)로 출력 시도
-        m.output(null);
+        // TODO 함수형인터페이스 search
+        // TODO 함수형인터페이스 sort
+        // TODO 함수형인터페이스 print
 
-        // DB에 수정사항 저장하기
-        pushDB(m);
-    }
+        studentDB.pushDB();
 
-    public static void pushDB(ObjectIO m) {
-        if (m instanceof StudentDBIO) {
-            StudentDBIO s = (StudentDBIO) m;
-            try {
-                s.pushDB();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
+        // 직원관리
+//        ObjectDBIO<Employee> employee = ObjectDBIO.getInstance(Employee.class);
+//
+//        employee.readDB();
+//
+//        // TODO 함수형인터페이스 add
+//        // TODO 함수형인터페이스 search
+//        // TODO 함수형인터페이스 sort
+//        // TODO 함수형인터페이스 print
+//
+//        employee.pushDB();
 
-    public static void readDB(ObjectIO m) {
-        if (m instanceof StudentDBIO) {
-            StudentDBIO s = (StudentDBIO) m;
-            try {
-                s.readDB();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
     }
 
 }
