@@ -17,9 +17,9 @@ public class InterfaceIO<T, U> {
     }
 
     // DB 에서 object 를 탐색하는 함수
-    public void search(Searchable<T> searchable, Supplier<T> supplier) {
+    public void search(Searchable<T> searchable, Function<U, T> supplier, U param) {
         // 사용예 : io.add(item -> System.out.println(item), Student::new);
-        T item = supplier.get();
+        T item = supplier.apply(param);
         searchable.searchObject(item);
     }
 

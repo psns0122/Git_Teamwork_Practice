@@ -1,5 +1,7 @@
 package ObjectClass;
 
+import Interface.Calculable;
+
 public class Student implements Comparable<Student> {
     private String sno;
     private String name;
@@ -10,6 +12,27 @@ public class Student implements Comparable<Student> {
     private int total;
     private float average;
     private String grade;
+
+    //================총점, 평균, 성적 구하는 메소드======
+
+    public int sum(Calculable calculable) {
+        return calculable.calculate(korean,math,english,science);
+    }
+
+    public float avg() {
+        return total/4.0f;
+    }
+
+    public String grade(){
+        double avg = this.average;
+        if (avg >= 90) return "A";
+        else if (avg >= 80) return "B";
+        else if (avg >= 70) return "C";
+        else if (avg >= 60) return "D";
+        else return "F";
+    }
+
+    //==========================
 
     public Student() {}
 

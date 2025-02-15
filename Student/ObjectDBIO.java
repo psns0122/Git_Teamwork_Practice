@@ -47,7 +47,7 @@ public class ObjectDBIO<T> extends ObjectIO {
         if (M.getType() == Student.class) {
             // StudentDB로 연결
             br = new BufferedReader(new FileReader("src/File/StudentDB.dat"));
-            System.out.println("학생 read");
+            InterfaceIO<Student, String> io = new InterfaceIO<>();
 
             /// ////////////////////////////
             /// ////////////////////////////
@@ -58,12 +58,27 @@ public class ObjectDBIO<T> extends ObjectIO {
                 // 줄이 비어있으면 종료
                 if (line == null) break;
 
-                InterfaceIO<Student, String> io = new InterfaceIO<>();
                 io.add(
                         (item) -> {
                             M.getObjects().add((T)item);
                         },
-                        (param) -> new Student(param),
+
+                        (param) -> {
+                            Student student = new Student(param);
+
+                            // 총점 계산
+                            int totalScore = student.sum((korean, english, math, science) -> korean + english + math + science);
+                            student.setTotal(totalScore);
+
+                            // 평균 계산
+                            student.setAverage(student.avg());
+
+                            // 성적 계산
+                            student.setGrade(student.grade());
+
+                            return student;
+                        },
+
                         line
                 );
             }
@@ -75,7 +90,7 @@ public class ObjectDBIO<T> extends ObjectIO {
         } else if (M.getType() == Employee.class) {
             // EmployeeDB로 연결
             br = new BufferedReader(new FileReader("src/File/EmployeeDB.dat"));
-            System.out.println("직원 read");
+            InterfaceIO<Employee, String> io = new InterfaceIO<>();
 
             /// ////////////////////////////
             /// ////////////////////////////
@@ -86,12 +101,19 @@ public class ObjectDBIO<T> extends ObjectIO {
                 // 줄이 비어있으면 종료
                 if (line == null) break;
 
-                InterfaceIO<Employee, String> io = new InterfaceIO<>();
                 io.add(
                         (item) -> {
                             M.getObjects().add((T)item);
                         },
-                        (param) -> new Employee(param),
+
+                        (param) -> {
+                            Employee employee = new Employee(param);
+
+                            // TODO 급여계산
+
+                            return employee;
+                        },
+
                         line
                 );
             }
@@ -99,6 +121,7 @@ public class ObjectDBIO<T> extends ObjectIO {
             /// ////////////////////////////
             /// ////////////////////////////
         }
+
 
         if (br != null) br.close();
     }
