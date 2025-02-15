@@ -1,4 +1,3 @@
-import Interface.InterfaceIO;
 import ObjectClass.Employee;
 import ObjectClass.Student;
 
@@ -14,32 +13,25 @@ public class TESTMAIN {
         studentDB.readDB();
 
         // TODO 함수형인터페이스 add
-//        InterfaceIO<Student, String> io = new InterfaceIO<>();
-//        io.add(
-//                (item) -> {
-//                    ((ObjectManager<Student>)studentDB).getObjects().add(item);
-//                },
-//                (param) -> new Student(param),
-//                "1111 1111 111 111 111 111 11 11 1"
-//        );
-
         // TODO 함수형인터페이스 search
         // TODO 함수형인터페이스 sort
         // TODO 함수형인터페이스 print
 
         studentDB.pushDB();
 
+        System.out.println("\n////////////////////////////////////////////////////////////////////\n");
+
         // 직원관리
-//        ObjectDBIO<Employee> employee = ObjectDBIO.getInstance(Employee.class);
-//
-//        employee.readDB();
-//
-//        // TODO 함수형인터페이스 add
-//        // TODO 함수형인터페이스 search
-//        // TODO 함수형인터페이스 sort
-//        // TODO 함수형인터페이스 print
-//
-//        employee.pushDB();
+        ObjectDBIO<Employee> employee = ObjectDBIO.getInstance(Employee.class);
+
+        employee.readDB();
+
+        // TODO 함수형인터페이스 add
+        // TODO 함수형인터페이스 search
+        // TODO 함수형인터페이스 sort
+        // TODO 함수형인터페이스 print
+
+        employee.pushDB();
 
     }
 

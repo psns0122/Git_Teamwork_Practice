@@ -3,14 +3,9 @@ import java.util.Iterator;
 
 public class ObjectManager<T> extends ObjectDBIO<T> implements Iterable<T> {
     private ArrayList<T> objects = new ArrayList<>();
-    private Class<T> type;
 
     protected ObjectManager(Class<T> type) {
-        this.type = type;
-    }
-
-    public Class<T> getType() {
-        return this.type;
+        super(type);
     }
 
     // ObjectList에 추가
