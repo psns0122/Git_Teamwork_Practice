@@ -13,7 +13,7 @@ public class Student implements Comparable<Student> {
     private float average;
     private String grade;
 
-    //================총점, 평균, 성적 구하는 메소드======
+    //====총점, 평균, 성적 구하는 메소드=====
 
     public int sum(Calculable calculable) {
         return calculable.calculate(korean,math,english,science);
@@ -24,15 +24,14 @@ public class Student implements Comparable<Student> {
     }
 
     public String grade(){
-        double avg = this.average;
-        if (avg >= 90) return "A";
-        else if (avg >= 80) return "B";
-        else if (avg >= 70) return "C";
-        else if (avg >= 60) return "D";
+        if (average >= 90) return "A";
+        else if (average >= 80) return "B";
+        else if (average >= 70) return "C";
+        else if (average >= 60) return "D";
         else return "F";
     }
 
-    //==========================
+    //====================================
 
     public Student() {}
 
@@ -50,15 +49,6 @@ public class Student implements Comparable<Student> {
         this.sno = Integer.toString(sno);
     }
 
-    public Student(String sno, String name, int science, int korean, int english, int math) {
-        this.sno = sno;
-        this.name = name;
-        this.science = science;
-        this.korean = korean;
-        this.english = english;
-        this.math = math;
-    }
-
     @Override
     public int compareTo(Student o) {
         // 기본 정렬 : 성적순으로 정렬
@@ -74,11 +64,6 @@ public class Student implements Comparable<Student> {
         }return -1;
     }
 
-//    @Override
-//    public int compareTo(Student o) {
-//        return Integer.compare(Integer.parseInt(this.sno), Integer.parseInt(o.sno));
-//    }
-
     @Override
     public String toString() {
         return sno + " " + name + " " +
@@ -86,7 +71,6 @@ public class Student implements Comparable<Student> {
                 total + " " + average + " " + grade;
     }
 
-    // indexOf()가 학번 비교를 할 수 있도록 equals() 오버라이드
     @Override
     public boolean equals(Object obj) {
         // 같은 객체일 경우 true

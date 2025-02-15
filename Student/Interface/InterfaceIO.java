@@ -24,11 +24,11 @@ public class InterfaceIO<T, U> {
         return item;
     }
 
-    // objects 를 정렬하는 함수
-    public void sort(Sortable sortable) {
-        // 사용예 : io.add(item -> System.out.println(item), Student::new);
-        sortable.sortObject();
-    }
+//    // objects 를 정렬하는 함수
+//    public void sort(Sortable sortable) {
+//        // 사용예 : io.add(item -> System.out.println(item), Student::new);
+//        sortable.sortObject();
+//    }
 
     // objects 를 출력하는 함수
     public void print(Printable<T> printable, Supplier<T> supplier) {

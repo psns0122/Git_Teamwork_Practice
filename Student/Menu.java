@@ -4,7 +4,6 @@ import ObjectClass.Student;
 
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.List;
 
 @SuppressWarnings("unchecked")
 public class Menu{
@@ -13,6 +12,7 @@ public class Menu{
     }
 
     static void addItem(ObjectDBIO manager, String data) {
+        // 1️⃣ 만약 현재 타입이 Student 라면
         if (manager.getType() == Student.class) {
             InterfaceIO<Student, String> io = new InterfaceIO<>();
             io.add(
@@ -41,6 +41,7 @@ public class Menu{
             );
         }
 
+        // 2️⃣ 만약 현재 타입이 Employee 라면
         else if (manager.getType() == Employee.class) {
 
             InterfaceIO<Employee, String> io = new InterfaceIO<>();
@@ -64,12 +65,16 @@ public class Menu{
     static void sort(ObjectDBIO manager, By type) {
         if (type == By.num) {
             // 학번 || 사번 으로 정렬
+            // 1️⃣ 만약 현재 타입이 Student 라면
             if (manager.getType() == Student.class) {
                 Collections.sort(
                         ((ObjectManager<Student>) manager).getObjects(),
                         Comparator.comparing(Student::getSno)
                 );
-            } else if (manager.getType() == Employee.class) {
+            }
+
+            // 2️⃣ 만약 현재 타입이 Employee 라면
+            else if (manager.getType() == Employee.class) {
                 Collections.sort(
                         ((ObjectManager<Employee>) manager).getObjects(),
                         Comparator.comparing(Employee::getEmpNo)
@@ -79,12 +84,16 @@ public class Menu{
 
         else if (type == By.name) {
             // 이름으로 정렬
+            // 1️⃣ 만약 현재 타입이 Student 라면
             if (manager.getType() == Student.class) {
                 Collections.sort(
                         ((ObjectManager<Student>) manager).getObjects(),
                         Comparator.comparing(Student::getName)
                 );
-            } else if (manager.getType() == Employee.class) {
+            }
+
+            // 2️⃣ 만약 현재 타입이 Employee 라면
+            else if (manager.getType() == Employee.class) {
                 Collections.sort(
                         ((ObjectManager<Employee>) manager).getObjects(),
                         Comparator.comparing(Employee::getName)
@@ -94,15 +103,20 @@ public class Menu{
 
         else if (type == By.score) {
             // 성적으로 정렬
+            // 1️⃣ 만약 현재 타입이 Student 라면
             if (manager.getType() == Student.class) {
                 Collections.sort(((ObjectManager<Student>)manager).getObjects());
-            } else if (manager.getType() == Employee.class) {
+            }
+
+            // 2️⃣ 만약 현재 타입이 Employee 라면
+            else if (manager.getType() == Employee.class) {
                 Collections.sort(((ObjectManager<Employee>)manager).getObjects());
             }
         }
     }
 
     static void printALl(ObjectDBIO manager) {
+        // 1️⃣ 만약 현재 타입이 Student 라면
         if (manager.getType() == Student.class) {
             InterfaceIO<Student, String> io = new InterfaceIO<>();
             io.print(
@@ -115,6 +129,7 @@ public class Menu{
             );
         }
 
+        // 2️⃣ 만약 현재 타입이 Employee 라면
         else if (manager.getType() == Employee.class) {
             InterfaceIO<Employee, String> io = new InterfaceIO<>();
             io.print(
@@ -126,6 +141,110 @@ public class Menu{
                     Employee::new
             );
         }
+    }
+
+    static void printThis(Student student) {
+        InterfaceIO<Student, String> io = new InterfaceIO<>();
+        io.print(
+                (item) -> {
+                    if (item != null)
+                    {
+                        System.out.println("학번\t\t이름\t국어\t영어\t수학\t과학\t총점\t평균\t학점");
+                        System.out.println(item);
+                    } else {
+                        System.out.println("찾는 학생이 없습니다.");
+                    }
+                },
+                student
+        );
+    }
+
+    static void printThis(Employee employee) {
+        InterfaceIO<Employee, String> io = new InterfaceIO<>();
+        io.print(
+                (item) -> {
+                    if (item != null)
+                    {
+                        System.out.println("학번\t\t이름\t국어\t영어\t수학\t과학\t총점\t평균\t학점");
+                        System.out.println(item);
+                    } else {
+                        System.out.println("찾는 학생이 없습니다.");
+                    }
+                },
+                employee
+        );
+    }
+
+    static Student getStudent(ObjectDBIO<Student> manager, String key) {
+        InterfaceIO<Student, String> io = new InterfaceIO<>();
+        Student student = io.search(
+                (item) -> {
+                    // forEach 는 return 사용 불가
+                    // forEach 대신 stream 사용 (filter + findFirst)
+                    return ((ObjectManager<Student>) manager).getObjects().stream()
+                            .filter(s -> s.getName().equals(item.getName())) // 조건에 맞는 첫 번째 요소 필터
+                            .findFirst() // 첫 번째 일치하는 요소 반환
+                            .orElse(null); // 없으면 null 반환
+                },
+
+                (param) -> new Student(param),
+                key
+        );
+        return student;
+    }
+
+    static Employee getEmployee(ObjectDBIO<Employee> manager, String key) {
+        InterfaceIO<Employee, String> io = new InterfaceIO<>();
+        Employee employee = io.search(
+                (item) -> {
+                    // forEach 는 return 사용 불가
+                    // forEach 대신 stream 사용 (filter + findFirst)
+                    return ((ObjectManager<Employee>) manager).getObjects().stream()
+                            .filter(s -> s.getName().equals(item.getName())) // 조건에 맞는 첫 번째 요소 필터
+                            .findFirst() // 첫 번째 일치하는 요소 반환
+                            .orElse(null); // 없으면 null 반환
+                },
+
+                (param) -> new Employee(param),
+                key
+        );
+        return employee;
+    }
+
+    static Student getStudent(ObjectDBIO<Student> manager, int key) {
+        InterfaceIO<Student, Integer> io = new InterfaceIO<>();
+        Student student = io.search(
+                (item) -> {
+                    // forEach 는 return 사용 불가
+                    // forEach 대신 stream 사용 (filter + findFirst)
+                    return ((ObjectManager<Student>) manager).getObjects().stream()
+                            .filter(s -> s.getName().equals(item.getName())) // 조건에 맞는 첫 번째 요소 필터
+                            .findFirst() // 첫 번째 일치하는 요소 반환
+                            .orElse(null); // 없으면 null 반환
+                },
+
+                (param) -> new Student(param),
+                key
+        );
+        return student;
+    }
+
+     static Employee getEmployee(ObjectDBIO<Employee> manager, int key) {
+        InterfaceIO<Employee, Integer> io = new InterfaceIO<>();
+        Employee employee = io.search(
+                (item) -> {
+                    // forEach 는 return 사용 불가
+                    // forEach 대신 stream 사용 (filter + findFirst)
+                    return ((ObjectManager<Employee>) manager).getObjects().stream()
+                            .filter(s -> s.getName().equals(item.getName())) // 조건에 맞는 첫 번째 요소 필터
+                            .findFirst() // 첫 번째 일치하는 요소 반환
+                            .orElse(null); // 없으면 null 반환
+                },
+
+                (param) -> new Employee(param),
+                key
+        );
+        return employee;
     }
 
 }

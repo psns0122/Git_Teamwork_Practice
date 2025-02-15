@@ -10,6 +10,9 @@ public class Employee implements Comparable<Employee> {
     public Employee(String name) {
     }
 
+    public Employee(int empNo) {
+    }
+
     @Override
     public String toString() {
         return "Employee{}";
