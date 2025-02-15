@@ -46,9 +46,8 @@ public class Student implements Comparable<Student> {
         this.science = Integer.parseInt(parts[5]);
     }
 
-    public Student(String sno, String name) {
-        this.sno = sno;
-        this.name = name;
+    public Student(int sno) {
+        this.sno = Integer.toString(sno);
     }
 
     public Student(String sno, String name, int science, int korean, int english, int math) {
@@ -62,8 +61,23 @@ public class Student implements Comparable<Student> {
 
     @Override
     public int compareTo(Student o) {
-        return Integer.compare(Integer.parseInt(this.sno), Integer.parseInt(o.sno));
+        // 기본 정렬 : 성적순으로 정렬
+        //return Integer.compare(o.total,this.total);
+        if (this.total < o.total) {
+            return 1;
+        } else if (this.total == o.total) {
+            if (this.name.charAt(0) > o.name.charAt(0)) {
+                return 1;
+            } else {
+            }
+            return -1;
+        }return -1;
     }
+
+//    @Override
+//    public int compareTo(Student o) {
+//        return Integer.compare(Integer.parseInt(this.sno), Integer.parseInt(o.sno));
+//    }
 
     @Override
     public String toString() {

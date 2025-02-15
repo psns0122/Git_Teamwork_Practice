@@ -47,80 +47,27 @@ public class ObjectDBIO<T> extends ObjectIO {
         if (M.getType() == Student.class) {
             // StudentDB로 연결
             br = new BufferedReader(new FileReader("src/File/StudentDB.dat"));
-            InterfaceIO<Student, String> io = new InterfaceIO<>();
-
-            /// ////////////////////////////
-            /// ////////////////////////////
-
-            while (true) {
-                // 한 줄씩 읽기
-                String line = br.readLine();
-                // 줄이 비어있으면 종료
-                if (line == null) break;
-
-                io.add(
-                        (item) -> {
-                            M.getObjects().add((T)item);
-                        },
-
-                        (param) -> {
-                            Student student = new Student(param);
-
-                            // 총점 계산
-                            int totalScore = student.sum((korean, english, math, science) -> korean + english + math + science);
-                            student.setTotal(totalScore);
-
-                            // 평균 계산
-                            student.setAverage(student.avg());
-
-                            // 성적 계산
-                            student.setGrade(student.grade());
-
-                            return student;
-                        },
-
-                        line
-                );
-            }
-
-            /// ////////////////////////////
-            /// ////////////////////////////
 
         // 2️⃣ 만약 현재 타입이 Employee 라면
         } else if (M.getType() == Employee.class) {
             // EmployeeDB로 연결
             br = new BufferedReader(new FileReader("src/File/EmployeeDB.dat"));
-            InterfaceIO<Employee, String> io = new InterfaceIO<>();
-
-            /// ////////////////////////////
-            /// ////////////////////////////
-
-            while (true) {
-                // 한 줄씩 읽기
-                String line = br.readLine();
-                // 줄이 비어있으면 종료
-                if (line == null) break;
-
-                io.add(
-                        (item) -> {
-                            M.getObjects().add((T)item);
-                        },
-
-                        (param) -> {
-                            Employee employee = new Employee(param);
-
-                            // TODO 급여계산
-
-                            return employee;
-                        },
-
-                        line
-                );
-            }
-
-            /// ////////////////////////////
-            /// ////////////////////////////
         }
+
+        /// ////////////////////////////
+        /// ////////////////////////////
+
+        while (true) {
+            // 한 줄씩 읽기
+            String line = br.readLine();
+            // 줄이 비어있으면 종료
+            if (line == null) break;
+
+            Menu.addItem(M, line);
+        }
+
+        /// ////////////////////////////
+        /// ////////////////////////////
 
 
         if (br != null) br.close();
@@ -135,13 +82,11 @@ public class ObjectDBIO<T> extends ObjectIO {
         if (M.getType() == Student.class) {
             // StudentDB로 연결
             pw = new PrintWriter("src/File/StudentDB.dat");
-            System.out.println("학생 push");
 
         // 2️⃣ 만약 현재 타입이 Employee 라면
         } else if (M.getType() == Employee.class) {
             // EmployeeDB로 연결
             pw = new PrintWriter("src/File/EmployeeDB.dat");
-            System.out.println("직원 push");
         }
             /// /////////////////////////////////////////////
             /// /////////////////////////////////////////////
@@ -149,9 +94,9 @@ public class ObjectDBIO<T> extends ObjectIO {
             // 제네릭 타입 T로 캐스팅 후 객체 리스트 반복
             for (T s : ((ObjectManager<T>) M)) {
                 // 파일에 객체 정보를 출력
-                System.out.println(s);
                 pw.println(s);
             }
+
             /// /////////////////////////////////////////////
             /// /////////////////////////////////////////////
 
