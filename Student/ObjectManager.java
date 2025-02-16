@@ -8,11 +8,6 @@ public class ObjectManager<T> extends ObjectDBIO<T> implements Iterable<T> {
         super(type);
     }
 
-    // ObjectList에 추가
-    public void addObjectList(T item) {
-        objects.add(item);
-    }
-
     // Iterable 인터페이스 메서드 구현
     @Override
     public Iterator<T> iterator() {

@@ -2,14 +2,172 @@ import Interface.InterfaceIO;
 import ObjectClass.Employee;
 import ObjectClass.Student;
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Scanner;
 import java.util.StringTokenizer;
 
 @SuppressWarnings("unchecked")
 public class Menu{
     enum By {
         num, name, score
+    }
+
+    static final int STUDENT = 1;
+    static final int EMPLOYEE = 2;
+
+    static final int ADD = 1;
+    static final int SEARCH = 2;
+    static final int PRINT = 3;
+    static final int SAVE = 4;
+
+    static Scanner sc = new Scanner(System.in);
+
+    static void startSystem() throws IOException {
+        int choice;
+
+        while (true) {
+            System.out.println();
+            System.out.println("\t------------------------------");
+            System.out.println("\t-       학교 관리 시스템       -");
+            System.out.println("\t------------------------------");
+            System.out.println("\t1. 학생관리\t\t2. 직원관리");
+            System.out.println("\t3. 시스템 종료");
+            System.out.println();
+            System.out.print("\t입력: "); choice = sc.nextInt();
+
+            if (choice == STUDENT) {
+                // 학생관리
+                ObjectDBIO<Student> manager = ObjectDBIO.getInstance(Student.class);
+                Menu.studentSystem(manager);
+            } else if (choice == EMPLOYEE) {
+                // 직원관리
+                ObjectDBIO<Employee> manager = ObjectDBIO.getInstance(Employee.class);
+//            Menu.employeeSystem(manager);
+            } else {
+                System.out.println("\t학교 관리 시스템을 종료합니다.");
+                break;
+            }
+        }
+    }
+
+    static void studentSystem(ObjectDBIO manager) throws IOException {
+        int choice;
+
+        // StudentDB 파일에서 정보 읽어오기
+        manager.readDB();
+
+        while (true) {
+            System.out.println();
+            System.out.println("\t------------------------------");
+            System.out.println("\t-       학생 관리 시스템       -");
+            System.out.println("\t------------------------------");
+            System.out.println("\t1. 학생 등록\t\t2. 학생 검색");
+            System.out.println("\t3. 전체학생 출력\t4. 변경사항 저장");
+            System.out.println("\t5. 시스템 종료");
+            System.out.println();
+            System.out.print("\t입력: "); choice = sc.nextInt();
+            System.out.println();
+
+            // 1️⃣ 학생 등록
+            if (choice == ADD) {
+                StringBuffer item = new StringBuffer();
+                System.out.println("\t등록할 학생 정보를 순서대로 입력하세요.");
+
+                System.out.print("\t학번 : ");
+                int sno = sc.nextInt();
+                if (searchItem(manager, sno)) {
+                    System.out.println("\n\t이미 존재하는 학번입니다.");
+                    continue;
+                } else {
+                    item.append(sno + " ");
+                }
+
+                System.out.print("\t이름 : "); item.append(sc.next() + " ");
+                System.out.print("\t국어점수 : "); item.append(checkValidScore(sc.nextInt()) + " ");
+                System.out.print("\t수학점수 : "); item.append(checkValidScore(sc.nextInt()) + " ");
+                System.out.print("\t과학점수 : "); item.append(checkValidScore(sc.nextInt()) + " ");
+                System.out.print("\t영어점수 : "); item.append(checkValidScore(sc.nextInt()));
+
+                String constItem = item.toString();
+                addItem(manager, constItem);
+                System.out.println("\t\n학생 [" + constItem + "] 등록을 성공적으로 마쳤습니다.");
+            }
+
+            // 2️⃣ 학생 검색
+            else if (choice == SEARCH) {
+                String key;
+
+                System.out.println("\t검색할 학생의 학번 혹은 이름을 입력하세요.");
+                System.out.println();
+                System.out.print("\t검색어 : "); key = sc.next();
+
+                if (key.matches("\\d+")) {
+                    int sno = Integer.parseInt(key);
+                    if (searchItem(manager, sno)) {
+                        System.out.println("\n학번\t\t이름\t국어\t영어\t수학\t과학\t총점\t평균\t학점");
+                        System.out.println(getStudent(manager, sno));
+                    } else {
+                        System.out.println("\n\t학번 " + sno + " 를 찾을 수 없습니다.");
+                    }
+                } else {
+                    if (searchItem(manager, key)) {
+                        System.out.println("\n학번\t\t이름\t국어\t영어\t수학\t과학\t총점\t평균\t학점");
+                        System.out.println(getStudent(manager, key));
+                    } else {
+                        System.out.println("\n\t학생 " + key + " 를 찾을 수 없습니다.");
+                    }
+                }
+            }
+
+            // 3️⃣ 전체학생 출력
+            else if (choice == PRINT) {
+                int printType;
+
+                // 3-1. 정렬
+                System.out.println("\t정렬 방식을 선택하세요.");
+                System.out.println("\t1. 학번순\t2. 이름순\t3. 성적순");
+                System.out.println();
+                System.out.print("\t입력: "); printType = sc.nextInt();
+
+                switch (printType) {
+                    case 1:
+                        sort(manager, By.num);
+                        break;
+                    case 2:
+                        sort(manager, By.name);
+                        break;
+                    case 3:
+                        sort(manager, By.score);
+                        break;
+                }
+
+                // 3-2. 출력
+                System.out.println();
+                printAll(manager);
+            }
+            // 4️⃣ 변경사항 저장
+            else if (choice == SAVE) {
+                manager.pushDB();
+                System.out.println("\t성공적으로 저장 되었습니다.");
+            }
+
+            else {
+                System.out.println("\t학생 관리 시스템을 종료합니다.");
+                break;
+            }
+        }
+    }
+
+    static int checkValidScore(int score) {
+        if (score < 0) {
+            return 0;
+        } else if (score > 100) {
+            return 100;
+        } else {
+            return score;
+        }
     }
 
     // 🚀 - 요소 추가
@@ -175,9 +333,9 @@ public class Menu{
     // 🔍 - 이름 중복 확인
     static boolean searchItem(ObjectDBIO manager, String key) {
         if (manager.getType() == Student.class) {
-            return getStudent(manager, key) == null;
+            return getStudent(manager, key) != null;
         } else if (manager.getType() == Employee.class) {
-            return getEmployee(manager, key) == null;
+            return getEmployee(manager, key) != null;
         }
         return false;
     }
