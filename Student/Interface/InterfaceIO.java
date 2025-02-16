@@ -20,8 +20,9 @@ public class InterfaceIO<T, U> {
     public T search(Searchable<T> searchable, Function<U, T> supplier, U param) {
         // 사용예 : io.add(item -> System.out.println(item), Student::new);
         T item = supplier.apply(param);
-        searchable.searchObject(item);
-        return item;
+        // item 은 임시 객체,
+        // searchable.searchObject()가 찾은 실제 객체 반환
+        return searchable.searchObject(item);
     }
 
 //    // objects 를 정렬하는 함수

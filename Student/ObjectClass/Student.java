@@ -31,23 +31,19 @@ public class Student implements Comparable<Student> {
         else return "F";
     }
 
-    //====================================
+    //====생성자==========================
 
     public Student() {}
 
-    public Student(String line) {
-        String[] parts = line.split(" ");
-        this.sno = parts[0];
-        this.name = parts[1];
-        this.korean = Integer.parseInt(parts[2]);
-        this.english = Integer.parseInt(parts[3]);
-        this.math = Integer.parseInt(parts[4]);
-        this.science = Integer.parseInt(parts[5]);
+    public Student(String name) {
+        this.name = name;
     }
 
     public Student(int sno) {
-        this.sno = Integer.toString(sno);
+        this.sno = String.format("%010d", sno);
     }
+
+    //====오버라이딩 함수==================
 
     @Override
     public int compareTo(Student o) {
@@ -88,6 +84,8 @@ public class Student implements Comparable<Student> {
     public int hashCode() {
         return sno.hashCode();
     }
+
+    //====getter, setter 함수============
 
     public String getSno() {
         return sno;
