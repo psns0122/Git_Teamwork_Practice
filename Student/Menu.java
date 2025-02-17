@@ -8,22 +8,46 @@ import java.util.Comparator;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
+/**
+ * 메뉴 시스템(Menu) 클래스입니다.
+ * 학교 관리 시스템의 주요 기능(학생 및 직원 관리, 등록, 검색, 정렬, 저장 등)을 제공합니다.
+ */
 @SuppressWarnings("unchecked")
 public class Menu{
+    /**
+     * 정렬 기준을 나타내는 열거형입니다.
+     *
+     * @num 번호순 정렬
+     * @name 이름순 정렬
+     * @score 성적순 정렬
+     */
     enum By {
         num, name, score
     }
 
+    /** 메뉴 상수 : 학생 관리 기능 선택값 (1) */
     static final int STUDENT = 1;
+    /** 메뉴 상수 : 직원 관리 기능 선택값 (2) */
     static final int EMPLOYEE = 2;
 
+    /** 메뉴 상수: 추가(등록) 기능 선택값 (1) */
     static final int ADD = 1;
+    /** 메뉴 상수: 검색 기능 선택값 (2) */
     static final int SEARCH = 2;
+    /** 메뉴 상수: 전체 출력 기능 선택값 (3) */
     static final int PRINT = 3;
+    /** 메뉴 상수: 변경사항 저장 기능 선택값 (4) */
     static final int SAVE = 4;
 
+    /** 입력을 받기 위한 Scanner 객체입니다. */
     static Scanner sc = new Scanner(System.in);
 
+    /**
+     * 학교 관리 시스템을 시작하는 메서드입니다.
+     * 사용자에게 학생 또는 직원 관리 메뉴를 제공합니다.
+     *
+     * @throws IOException 입출력 예외 발생 시 던집니다.
+     */
     static void startSystem() throws IOException {
         int choice;
 
@@ -52,6 +76,13 @@ public class Menu{
         }
     }
 
+    /**
+     * 학생 관리 시스템을 실행하는 메서드입니다.
+     * 학생 등록, 검색, 전체 출력, 데이터 저장 등의 기능을 포함합니다.
+     *
+     * @param manager 학생 객체의 데이터베이스 관리 객체
+     * @throws IOException 입출력 예외 발생 시 던집니다.
+     */
     static void studentSystem(ObjectDBIO manager) throws IOException {
         int choice;
 
@@ -160,6 +191,13 @@ public class Menu{
         }
     }
 
+    /**
+     * 점수 유효성을 검사하는 메서드입니다.
+     * 0 미만일 경우 0, 100 초과일 경우 100으로 조정합니다.
+     *
+     * @param score 입력 점수
+     * @return 유효성 검증 후의 점수
+     */
     static int checkValidScore(int score) {
         if (score < 0) {
             return 0;
@@ -170,7 +208,14 @@ public class Menu{
         }
     }
 
-    // 🚀 - 요소 추가
+    /**
+     * 객체를 추가하는 메서드입니다.
+     * 학생 또는 직원 객체를 생성 후 리스트에 추가합니다.
+     *
+     * @param manager 데이터베이스 관리 객체
+     * @param data 추가할 객체 데이터 (문자열)
+     * @return 중복 여부에 따라 추가 성공 여부 반환
+     */
     static boolean addItem(ObjectDBIO manager, String data) {
         StringTokenizer st = new StringTokenizer(data);
         int num = Integer.parseInt(st.nextToken());
@@ -237,7 +282,13 @@ public class Menu{
         return true;
     }
 
-    // 🧷 정렬 (번호, 이름, 성적 순 정렬 제공)
+    /**
+     * 객체 리스트를 주어진 조건(By)에 따라 정렬합니다.
+     * 번호순, 이름순, 성적순 정렬을 제공합니다.
+     *
+     * @param manager 데이터베이스 관리 객체
+     * @param type 정렬 기준 (번호, 이름, 성적)
+     */
     static void sort(ObjectDBIO manager, By type) {
         if (type == By.num) {
             // 학번 || 사번 으로 정렬
@@ -291,7 +342,12 @@ public class Menu{
         }
     }
 
-    // 🖨️ 전체 출력
+    /**
+     * 전체 객체 리스트를 출력합니다.
+     * 학생과 직원에 따라 다른 형식으로 출력합니다.
+     *
+     * @param manager 데이터베이스 관리 객체
+     */
     static void printAll(ObjectDBIO manager) {
         // 1️⃣ 만약 현재 타입이 Student 라면
         if (manager.getType() == Student.class) {
@@ -320,7 +376,13 @@ public class Menu{
         }
     }
 
-    // 🔍 - 번호 중복 확인
+    /**
+     * 번호(학번/사번)를 기준으로 중복 여부를 확인합니다.
+     *
+     * @param manager 데이터베이스 관리 객체
+     * @param key 검색할 학번 또는 사번
+     * @return 검색 후 중복 여부 반환
+     */
     static boolean searchItem(ObjectDBIO manager, int key) {
         if (manager.getType() == Student.class) {
             return getStudent(manager, key) != null;
@@ -330,7 +392,13 @@ public class Menu{
         return false;
     }
 
-    // 🔍 - 이름 중복 확인
+    /**
+     * 이름을 기준으로 중복 여부를 확인합니다.
+     *
+     * @param manager 데이터베이스 관리 객체
+     * @param key 검색할 이름
+     * @return 검색 후 중복 여부 반환
+     */
     static boolean searchItem(ObjectDBIO manager, String key) {
         if (manager.getType() == Student.class) {
             return getStudent(manager, key) != null;
@@ -340,7 +408,14 @@ public class Menu{
         return false;
     }
 
-    // 🔍 - 1️⃣ 이름으로 학생 찾기
+    /**
+     * 이름으로 학생을 검색하는 메서드입니다.
+     * 주어진 이름에 해당하는 첫 번째 학생 객체를 반환합니다.
+     *
+     * @param manager 학생 데이터베이스 관리 객체
+     * @param key 검색할 학생 이름
+     * @return 검색된 학생 객체 또는 null
+     */
     static Student getStudent(ObjectDBIO<Student> manager, String key) {
         InterfaceIO<Student, String> io = new InterfaceIO<>();
         Student student = io.search(
@@ -359,7 +434,14 @@ public class Menu{
         return student;
     }
 
-    // 🔍 - 2️⃣ 이름으로 직원 찾기
+    /**
+     * 이름으로 직원을 검색하는 메서드입니다.
+     * 주어진 이름에 해당하는 첫 번째 직원 객체를 반환합니다.
+     *
+     * @param manager 직원 데이터베이스 관리 객체
+     * @param key 검색할 직원 이름
+     * @return 검색된 직원 객체 또는 null
+     */
     static Employee getEmployee(ObjectDBIO<Employee> manager, String key) {
         InterfaceIO<Employee, String> io = new InterfaceIO<>();
         Employee employee = io.search(
@@ -378,7 +460,14 @@ public class Menu{
         return employee;
     }
 
-    // 🔍 - 1️⃣ 학번으로 학생 찾기
+    /**
+     * 학번으로 학생을 검색하는 메서드입니다.
+     * 주어진 학번에 해당하는 첫 번째 학생 객체를 반환합니다.
+     *
+     * @param manager 학생 데이터베이스 관리 객체
+     * @param key 검색할 학생 학번
+     * @return 검색된 학생 객체 또는 null
+     */
     static Student getStudent(ObjectDBIO<Student> manager, int key) {
         InterfaceIO<Student, Integer> io = new InterfaceIO<>();
         Student student = io.search(
@@ -397,7 +486,14 @@ public class Menu{
         return student;
     }
 
-    // 🔍 - 2️⃣ 사번으로 직원 찾기
+    /**
+     * 사번으로 직원을 검색하는 메서드입니다.
+     * 주어진 사번에 해당하는 첫 번째 직원 객체를 반환합니다.
+     *
+     * @param manager 직원 데이터베이스 관리 객체
+     * @param key 검색할 직원 사번
+     * @return 검색된 직원 객체 또는 null
+     */
      static Employee getEmployee(ObjectDBIO<Employee> manager, int key) {
         InterfaceIO<Employee, Integer> io = new InterfaceIO<>();
         Employee employee = io.search(
