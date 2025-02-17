@@ -1,4 +1,4 @@
-package ObjectClass;
+package DTO;
 
 import Interface.Calculable;
 
@@ -32,7 +32,7 @@ public class Student implements Comparable<Student> {
      * 총점을 계산하는 메서드입니다.
      *
      * @param calculable 성적 계산을 위한 람다식
-     * @return 총점
+     * @return 총점 int
      */
     public int sum(Calculable calculable) {
         return calculable.calculate(korean,math,english,science);
@@ -50,7 +50,7 @@ public class Student implements Comparable<Student> {
     /**
      * 학점을 계산하는 메서드입니다.
      *
-     * @return 학점(A, B, C, D, F)
+     * @return 학점(A, B, C, D, F) string
      */
     public String grade(){
         if (average >= 90) return "A";
@@ -62,7 +62,9 @@ public class Student implements Comparable<Student> {
 
     //====생성자===========================
 
-    /** 기본 생성자입니다. */
+    /**
+     * 기본 생성자입니다.
+     */
     public Student() {}
 
     /**

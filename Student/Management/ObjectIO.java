@@ -1,9 +1,11 @@
+package Management;
+
 import java.io.IOException;
 
 /**
  * 각종 입출력(IO)을 위한 추상 클래스입니다.
  * 데이터베이스, 혹은 파일의 읽기 및 저장 기능을 제공하며,
- * 하위 클래스(ObjectDBIO)가 구체적인 기능을 구현합니다.
+ * 하위 클래스(Managing.ObjectDBIO)가 구체적인 기능을 구현합니다.
  */
 public abstract class ObjectIO {
     /**

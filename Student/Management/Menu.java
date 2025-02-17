@@ -1,6 +1,8 @@
+package Management;
+
 import Interface.InterfaceIO;
-import ObjectClass.Employee;
-import ObjectClass.Student;
+import DTO.Employee;
+import DTO.Student;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -9,20 +11,21 @@ import java.util.Scanner;
 import java.util.StringTokenizer;
 
 /**
- * 메뉴 시스템(Menu) 클래스입니다.
+ * 메뉴 시스템(Management.Menu) 클래스입니다.
  * 학교 관리 시스템의 주요 기능(학생 및 직원 관리, 등록, 검색, 정렬, 저장 등)을 제공합니다.
  */
 @SuppressWarnings("unchecked")
 public class Menu{
     /**
      * 정렬 기준을 나타내는 열거형입니다.
-     *
-     * @num 번호순 정렬
-     * @name 이름순 정렬
-     * @score 성적순 정렬
      */
     enum By {
-        num, name, score
+        /** 학번을 기준으로 정렬합니다. */
+        num,
+        /** 이름을 기준으로 정렬합니다. */
+        name,
+        /** 점수를 기준으로 정렬합니다. */
+        score
     }
 
     /** 메뉴 상수 : 학생 관리 기능 선택값 (1) */
@@ -68,7 +71,7 @@ public class Menu{
             } else if (choice == EMPLOYEE) {
                 // 직원관리
                 ObjectDBIO<Employee> manager = ObjectDBIO.getInstance(Employee.class);
-//            Menu.employeeSystem(manager);
+//            Managing.Menu.employeeSystem(manager);
             } else {
                 System.out.println("\t학교 관리 시스템을 종료합니다.");
                 break;

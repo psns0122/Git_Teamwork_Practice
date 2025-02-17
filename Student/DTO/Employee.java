@@ -1,4 +1,4 @@
-package ObjectClass;
+package DTO;
 
 /**
  * 직원(Employee) 클래스입니다.

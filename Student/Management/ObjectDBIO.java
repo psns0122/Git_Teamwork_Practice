@@ -1,13 +1,15 @@
-import ObjectClass.Employee;
-import ObjectClass.Student;
+package Management;
+
+import DTO.Employee;
+import DTO.Student;
 
 import java.io.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 /**
- * 제네릭 타입을 활용한 데이터베이스 입출력(ObjectDBIO) 클래스입니다.
- * ObjectIO 추상 클래스를 상속하며, 제네릭 타입별(Student, Employee 등)
+ * 제네릭 타입을 활용한 데이터베이스 입출력(Managing.ObjectDBIO) 클래스입니다.
+ * Managing.ObjectIO 추상 클래스를 상속하며, 제네릭 타입별(Student, Employee 등)
  * 싱글톤 인스턴스를 관리하고 데이터 읽기 및 저장 기능을 제공합니다.
  *
  * @param <T> 관리할 객체의 타입
@@ -43,12 +45,12 @@ public class ObjectDBIO<T> extends ObjectIO {
     }
 
     /**
-     * 주어진 클래스 타입에 해당하는 싱글톤 ObjectDBIO 인스턴스를 반환합니다.
+     * 주어진 클래스 타입에 해당하는 싱글톤 Managing.ObjectDBIO 인스턴스를 반환합니다.
      * 없으면 생성(INSTANCES 등록) 후 반환합니다.
      *
      * @param <T> 객체 타입
      * @param type 클래스 타입
-     * @return ObjectDBIO 인스턴스
+     * @return Managing.ObjectDBIO 인스턴스
      */
     @SuppressWarnings("unchecked")
     public static <T> ObjectDBIO<T> getInstance(Class<T> type) {
@@ -56,10 +58,10 @@ public class ObjectDBIO<T> extends ObjectIO {
     }
 
     /**
-     * 현재 타입(T)에 해당하는 ObjectManager<T> 인스턴스를 INSTANCES 에서 반환합니다.
+     * 현재 타입(T)에 해당하는 Managing.ObjectManager<T> 인스턴스를 INSTANCES 에서 반환합니다.
      * 해당 타입이 없으면 null 을 반환합니다.
      *
-     * @return ObjectManager 인스턴스 또는 null
+     * @return Managing.ObjectManager 인스턴스 또는 null
      */
     @SuppressWarnings("unchecked")
     private ObjectManager<T> getManager() {

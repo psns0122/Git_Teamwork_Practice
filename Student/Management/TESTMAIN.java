@@ -1,3 +1,5 @@
+package Management;
+
 import java.io.IOException;
 
 /**
@@ -8,7 +10,7 @@ public class TESTMAIN {
 
     /**
      * 학교 관리 시스템을 시작하는 main 메서드입니다.
-     * Menu.startSystem() 메서드를 호출해 메인 메뉴를 표시합니다.
+     * Managing.Menu.startSystem() 메서드를 호출해 메인 메뉴를 표시합니다.
      *
      * @param args 실행 시 전달되는 인자 (사용하지 않음)
      * @throws IOException 입출력 오류 발생 시 예외를 던집니다.
